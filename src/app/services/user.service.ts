@@ -35,7 +35,7 @@ export class UserService {
         resolve(this.currentUser.name);
       } else {
         const alert = await this.alertController.create({
-          header: 'Prompt!',
+          header: 'What\'s your name?',
           inputs: [{
             name: 'name',
             type: 'text',
