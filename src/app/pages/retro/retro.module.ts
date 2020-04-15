@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {IonicModule} from '@ionic/angular';
 
-import { IonicModule } from '@ionic/angular';
-
-import { RetroPageRoutingModule } from './retro-routing.module';
-
-import { RetroPage } from './retro.page';
+import {RetroPageRoutingModule} from './retro-routing.module';
+import {RetroPage} from './retro.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RetroPageRoutingModule
+    RetroPageRoutingModule,
   ],
-  declarations: [RetroPage]
+  declarations: [
+    RetroPage,
+  ]
 })
-export class RetroPageModule {}
+export class RetroPageModule {
+}

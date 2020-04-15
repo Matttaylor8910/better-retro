@@ -1,9 +1,19 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>retro</ion-title>
+    <ion-title>
+      {{ (retro$ | async)?.name || 'Loading...' }}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="retro-container" *ngIf="retro$ | async as retro; else loading">
+    <h1>Time to write the real code now</h1>
+  </div>
 </ion-content>
+
+<ng-template #loading>
+  <div class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+</ng-template>

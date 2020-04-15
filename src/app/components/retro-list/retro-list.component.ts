@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {RetroService} from 'src/app/services/retro.service';
 import {UserService} from 'src/app/services/user.service';
-import {UtilService} from 'src/app/services/util.service';
 import {Retrospective} from 'types';
 
 @Component({
@@ -16,14 +16,13 @@ export class RetroListComponent {
   constructor(
       private readonly retroService: RetroService,
       private readonly userService: UserService,
-      private readonly utilService: UtilService,
+      private readonly router: Router,
   ) {
     this.retros$ = this.retroService.getRetrospectives();
   }
 
   async join(retro: Retrospective) {
     const name = await this.userService.getCurrentUserName();
-    this.utilService.showToast(`Sorry ${name}, you can't join ${retro.name}!`);
-    console.log(`Nav to /retro/${retro.id}`);
+    this.router.navigate(['retro', retro.id]);
   }
 }

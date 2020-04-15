@@ -23,6 +23,17 @@ export class RetroService {
     return this.afs.collection('retrospectives').add(retro);
   }
 
+  getRetrospective(id: string): Observable<Retrospective> {
+    return this.afs.collection('retrospectives')
+        .doc(id)
+        .snapshotChanges()
+        .pipe(map(action => {
+          const data = action.payload.data() as Retrospective;
+          const id = action.payload.id;
+          return {id, ...data};
+        }));
+  }
+
   getRetrospectives(): Observable<Retrospective[]> {
     return this.afs
         .collection('retrospectives', ref => ref.orderBy('timestamp', 'desc'))
