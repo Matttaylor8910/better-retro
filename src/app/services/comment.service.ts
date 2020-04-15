@@ -18,7 +18,7 @@ export class CommentService {
       comment: Partial<Comment>): Promise<DocumentReference> {
     comment.timestamp = firestore.FieldValue.serverTimestamp();
     comment.owner = await this.userService.getOwner();
-    return this.afs.collection('retrospectives')
+    return this.afs.collection('retros')
         .doc(retroId)
         .collection(collection)
         .add(comment);
@@ -27,7 +27,7 @@ export class CommentService {
   updateComment(
       retroId: string, collection: CommentCollection,
       comment: Comment): Promise<void> {
-    return this.afs.collection('retrospectives')
+    return this.afs.collection('retros')
         .doc(retroId)
         .collection(collection)
         .doc(comment.id)
@@ -36,18 +36,19 @@ export class CommentService {
 
   deleteComment(
       retroId: string, collection: CommentCollection,
-      comment: Comment): Promise<void> {
-    return this.afs.collection('retrospectives')
+      commentId: string): Promise<void> {
+    return this.afs.collection('retros')
         .doc(retroId)
         .collection(collection)
-        .doc(comment.id)
+        .doc(commentId)
         .delete();
   }
 
-  getComments(retroId: string): Observable<Comment[]> {
-    return this.afs.collection('retrospectives')
+  getComments(retroId: string, collection: CommentCollection):
+      Observable<Comment[]> {
+    return this.afs.collection('retros')
         .doc(retroId)
-        .collection('thegood', ref => ref.orderBy('timestamp'))
+        .collection(collection, ref => ref.orderBy('timestamp'))
         .snapshotChanges()
         .pipe(map(actions => {return actions.map(action => {
                     const data = action.payload.doc.data() as Comment;

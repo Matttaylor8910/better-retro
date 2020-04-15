@@ -20,19 +20,19 @@ export class RetroService {
     retro.owner = await this.userService.getOwner();
 
     // create the retro, then immediately join it
-    const ref = await this.afs.collection('retrospectives').add(retro);
+    const ref = await this.afs.collection('retros').add(retro);
     this.joinRetro(ref.id);
 
     return ref;
   }
 
   async updateRetro(id: string, data: Partial<Retrospective>): Promise<void> {
-    return this.afs.collection('retrospectives').doc(id).update(data);
+    return this.afs.collection('retros').doc(id).update(data);
   }
 
   async joinRetro(id: string): Promise<void> {
     const owner = await this.userService.getOwner();
-    return this.afs.collection('retrospectives')
+    return this.afs.collection('retros')
         .doc(id)
         .collection('players')
         .doc(owner.userId)
@@ -40,7 +40,7 @@ export class RetroService {
   }
 
   getRetrospective(id: string): Observable<Retrospective> {
-    return this.afs.collection('retrospectives')
+    return this.afs.collection('retros')
         .doc<Retrospective>(id)
         .snapshotChanges()
         .pipe(map(action => {
@@ -53,7 +53,7 @@ export class RetroService {
   getRetrospectives(): Observable<Retrospective[]> {
     return this.afs
         .collection<Retrospective>(
-            'retrospectives', ref => ref.orderBy('timestamp', 'desc'))
+            'retros', ref => ref.orderBy('timestamp', 'desc'))
         .snapshotChanges()
         .pipe(map(actions => {
           return actions.map(action => {
@@ -65,7 +65,7 @@ export class RetroService {
   }
 
   getRetrospectivePlayers(id: string): Observable<PlayerStatus[]> {
-    return this.afs.collection('retrospectives')
+    return this.afs.collection('retros')
         .doc(id)
         .collection<PlayerStatus>('players', ref => ref.orderBy('name'))
         .snapshotChanges()
@@ -75,7 +75,7 @@ export class RetroService {
   async updateRetrospectivePlayer(
       retroId: string, userId: string,
       data: Partial<PlayerStatus>): Promise<void> {
-    return this.afs.collection('retrospectives')
+    return this.afs.collection('retros')
         .doc(retroId)
         .collection('players')
         .doc(userId)

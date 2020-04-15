@@ -1,4 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {orderBy} from 'lodash';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {CommentService} from 'src/app/services/comment.service';
@@ -17,30 +18,56 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
   private destroyed$ = new Subject<void>();
   private myComments: Comment[] = [];
-  private allComments: Comment[] = [];
+  private sortedByName: Comment[] = [];
+  private sortedByVote: Comment[] = [];
+
+  text = '';
+  creating = false;
 
   constructor(
       private readonly commentService: CommentService,
       private readonly userService: UserService,
   ) {}
 
-  get comments(): Comment[] {
-    if (!this.retro) return [];
+  get notesState(): boolean {
+    return this.retro.state === RETRO_STATE.NOTES;
+  }
 
-    return this.retro.state === RETRO_STATE.NOTES ? this.myComments :
-                                                    this.allComments;
+  get comments(): Comment[] {
+    switch (this.retro.state) {
+      case RETRO_STATE.NOTES:
+        return this.myComments;
+      case RETRO_STATE.FINISHED:
+        return this.sortedByVote;
+      default:
+        return this.sortedByName;
+    }
+  }
+
+  create(text: string) {
+    this.creating = true;
+    this.commentService.addComment(this.retro.id, this.collection, {text});
+    this.text = '';
+    this.creating = false;
   }
 
   ngOnInit() {
-    this.commentService.getComments(this.retro.id)
+    this.commentService.getComments(this.retro.id, this.collection)
         .pipe(takeUntil(this.destroyed$))
         .subscribe(async comments => {
-          this.allComments = comments;
+          this.sortedByName = orderBy(comments, 'owner.name');
+          this.sortedByVote = this.sortByVotes(comments);
 
           const userId = await this.userService.getCurrentUserId();
           this.myComments =
               comments.filter(comment => comment.owner.userId === userId);
-        })
+        });
+  }
+
+  sortByVotes(comments: Comment[]) {
+    // TODO: subscribe to votes so we can order the comments by the number of
+    // aggregated votes this comment has
+    return orderBy(comments, 'name');
   }
 
   ngOnDestroy() {

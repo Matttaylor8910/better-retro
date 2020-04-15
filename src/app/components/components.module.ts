@@ -1,5 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 
 import {CommentCardComponent} from './comment-card/comment-card.component';
@@ -21,6 +22,7 @@ import {StateProgressBarComponent} from './state-progress-bar/state-progress-bar
   imports: [
     IonicModule,
     CommonModule,
+    FormsModule,
   ],
   exports: [
     CommentCardComponent,

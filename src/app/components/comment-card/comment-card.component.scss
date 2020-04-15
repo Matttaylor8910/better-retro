@@ -1,0 +1,26 @@
+.comment {
+  ion-item {
+    --padding-start: 8px;
+
+    p {
+      padding-left: 8px;
+    }
+
+    ion-textarea {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin: 5px 0;
+      padding: 0 7px;
+    }
+
+    ion-button,
+    ion-badge {
+      margin-left: 12px;
+    }
+
+    ion-badge {
+      font-size: 14px;
+      padding: 4px 8px;
+    }
+  }
+}

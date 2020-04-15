@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Better Retro</h1>
     <div class="create-container">
-      <input #name [(ngModel)]="code" [disabled]="creating" (keyup.enter)="create(name.value)">
+      <input #name [disabled]="creating" (keyup.enter)="create(name.value)">
       <ion-button (click)="create(name.value)" [disabled]="creating">Create</ion-button>
     </div>
 

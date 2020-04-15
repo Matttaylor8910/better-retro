@@ -29,7 +29,7 @@ export class RetroPage {
 
   async determinePlaying() {
     const snapshot = await firestore()
-                         .collection('retrospectives')
+                         .collection('retros')
                          .doc(this.id)
                          .collection('players')
                          .get();
