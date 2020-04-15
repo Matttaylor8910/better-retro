@@ -3,7 +3,7 @@
 }
 
 .state-progress-bar-container {
-  background: #eee;
+  background: var(--ion-color-step-50);
   border-bottom: 1px solid #7f7f7f;
   width: 100%;
   height: 100px;
