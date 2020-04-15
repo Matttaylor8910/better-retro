@@ -38,11 +38,20 @@
 }
 
 @media (max-width: 600px) {
-  .state-progress-bar-container .state {
-    display: none;
+  .state-progress-bar-container {
+    height: 55px;
 
-    &.selected {
-      display: initial;
+    .state {
+      display: none;
+
+      &.selected {
+        width: 100%;
+        padding: 0 16px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
   }
 }
