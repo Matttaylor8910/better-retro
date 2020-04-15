@@ -13,7 +13,6 @@ import {Retro} from 'types';
 })
 export class RetroPage {
   id: string;
-  title = 'Loading...';
   playing = false;
   retro$: Observable<Retro>
 
@@ -38,10 +37,5 @@ export class RetroPage {
     const userId = await this.userService.getCurrentUserId();
 
     this.playing = playerIds.includes(userId);
-  }
-
-  async markPlayerDone(retro: Retro) {
-    const userId = await this.userService.getCurrentUserId();
-    this.retroService.updateRetrospectivePlayer(retro.id, userId, {done: true});
   }
 }

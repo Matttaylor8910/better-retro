@@ -12,10 +12,11 @@ import {Comment, CommentCollection, Retro, RETRO_STATE} from 'types';
   styleUrls: ['./comment-list.component.scss'],
 })
 export class CommentListComponent implements OnInit, OnDestroy {
-  @Input() title: string;
+  @Input() header: string;
   @Input() collection: CommentCollection;
   @Input() retro: Retro;
-  @Input() allowVoting: boolean = false;
+  @Input() allowVoting: boolean;
+  @Input() playing: boolean;
 
   private destroyed$ = new Subject<void>();
   private myComments: Comment[] = [];

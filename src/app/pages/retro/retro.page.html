@@ -13,10 +13,21 @@
     <app-players-bar [retro]="retro"></app-players-bar>
 
     <section class="comment-lists">
-      <app-comment-list title="Went Well" collection="thegood" [retro]="retro"></app-comment-list>
-      <app-comment-list title="Improvement Required" collection="thebad" allowVoting="true" [retro]="retro"></app-comment-list>
+      <app-comment-list
+        header="Went Well"
+        collection="thegood"
+        [allowVoting]="false"
+        [retro]="retro"
+        [playing]="playing">
+      </app-comment-list>
+      <app-comment-list
+        header="Improvement Required"
+        collection="thebad"
+        [allowVoting]="true"
+        [retro]="retro"
+        [playing]="playing">
+      </app-comment-list>
     </section>
-    <ion-button (click)="markPlayerDone(retro)" *ngIf="playing">I'm done</ion-button>
 
   </div>
 </ion-content>
