@@ -22,6 +22,7 @@ export interface Comment {
   text: string;
   owner: Player;
   timestamp: firebase.firestore.FieldValue;
+  votes?: number;
 }
 
 export interface Player {
@@ -32,17 +33,6 @@ export interface Player {
 // /restrospectives/{retro}/players/{userId}
 export interface PlayerStatus extends Player {
   done: boolean;
-}
-
-// /restrospectives/{retro}/thegood/{comment}/votes/{userId}
-// /restrospectives/{retro}/thebad/{comment}/votes/{userId}
-export interface Vote {
-  // If you call votesRef.doc(userId).set({count:
-  // firestore.FieldValue.increment(1) }) then count will be created or
-  // incremented by 1. This is useful for the same user voting on a comment more
-  // than one time
-  count: number;
-  timestamp: firebase.firestore.FieldValue;
 }
 
 export enum CommentCollection {

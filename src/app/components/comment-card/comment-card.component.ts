@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {AuthService} from 'src/app/services/auth.service';
 import {CommentService} from 'src/app/services/comment.service';
+import {VoteService} from 'src/app/services/vote.service';
 import {Comment, CommentCollection, Retro, RETRO_STATE} from 'types';
 
 @Component({
@@ -17,11 +18,10 @@ export class CommentCardComponent {
   editing = false;
   editableText: string;
 
-  voteCount = 0;
-
   constructor(
       private readonly authService: AuthService,
       private readonly commentService: CommentService,
+      private readonly voteService: VoteService,
   ) {}
 
   get readonly(): boolean {
@@ -48,6 +48,10 @@ export class CommentCardComponent {
     return this.comment.owner.userId === this.authService.currentUserId;
   }
 
+  get voteCount(): number {
+    return this.comment.votes || 0;
+  }
+
   startEditing() {
     this.editing = true;
     this.editableText = this.comment.text;
@@ -70,10 +74,10 @@ export class CommentCardComponent {
   }
 
   upvote() {
-    console.log('upvote');
+    this.voteService.upvote(this.retro.id, this.collection, this.comment.id);
   }
 
   downvote() {
-    console.log('downvote');
+    this.voteService.downvote(this.retro.id, this.collection, this.comment.id);
   }
 }

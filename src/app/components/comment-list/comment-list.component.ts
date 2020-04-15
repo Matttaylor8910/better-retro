@@ -39,7 +39,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
       case RETRO_STATE.NOTES:
         return this.myComments;
       case RETRO_STATE.FINISHED:
-        return this.sortedByVote;
+        return this.allowVoting ? this.sortedByVote : this.sortedByName;
       default:
         return this.sortedByName;
     }
@@ -57,18 +57,12 @@ export class CommentListComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroyed$))
         .subscribe(async comments => {
           this.sortedByName = orderBy(comments, 'owner.name');
-          this.sortedByVote = this.sortByVotes(comments);
+          this.sortedByVote = orderBy(comments, 'votes', 'desc');
 
           const userId = await this.userService.getCurrentUserId();
           this.myComments =
               comments.filter(comment => comment.owner.userId === userId);
         });
-  }
-
-  sortByVotes(comments: Comment[]) {
-    // TODO: subscribe to votes so we can order the comments by the number of
-    // aggregated votes this comment has
-    return orderBy(comments, 'name');
   }
 
   ngOnDestroy() {
