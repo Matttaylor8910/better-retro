@@ -25,6 +25,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
   text = '';
   creating = false;
+  loading = true;
 
   constructor(
       private readonly commentService: CommentService,
@@ -63,6 +64,8 @@ export class CommentListComponent implements OnInit, OnDestroy {
           const userId = await this.userService.getCurrentUserId();
           this.myComments =
               comments.filter(comment => comment.owner.userId === userId);
+
+          this.loading = false;
         });
   }
 

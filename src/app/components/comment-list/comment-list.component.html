@@ -5,7 +5,7 @@
   <!-- add a new comment -->
   <div class="new-comment" *ngIf="notesState && playing">
     <input [(ngModel)]="text" [disabled]="creating" (keyup.enter)="create(text)">
-    <ion-button (click)="create(name.value)" [disabled]="creating">
+    <ion-button (click)="create(text)" [disabled]="creating">
       <ion-icon name="add"></ion-icon>
     </ion-button>
   </div>
@@ -22,4 +22,9 @@
 
   <!-- not playing waiting state -->
   <h6 *ngIf="notesState && !playing">Waiting for players to finish up...</h6>
+
+  <!-- no comments -->
+  <h6 *ngIf="!notesState && comments.length === 0">
+    {{ loading ? 'Loading...' : 'No comments? 🤔' }}
+  </h6>
 </div>
