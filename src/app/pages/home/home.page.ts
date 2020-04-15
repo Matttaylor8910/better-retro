@@ -9,6 +9,7 @@ import {RetroService} from 'src/app/services/retro.service';
 })
 export class HomePage implements OnInit {
   creating: boolean;
+  name: string;
 
   constructor(
       private readonly retroService: RetroService,
@@ -19,9 +20,10 @@ export class HomePage implements OnInit {
     this.creating = false;
   }
 
-  async create(name: string) {
+  async create() {
     this.creating = true;
-    const docRef = await this.retroService.createRetro({name});
+    const docRef = await this.retroService.createRetro({name: this.name});
+    this.name = '';
     this.router.navigate(['retro', docRef.id]);
     this.creating = false;
   }

@@ -1,10 +1,10 @@
 <ion-content [fullscreen]="true">
   <div class="container">
     <h1>Better Retro</h1>
-    <div class="create-container">
-      <input #name [disabled]="creating" (keyup.enter)="create(name.value)">
-      <ion-button (click)="create(name.value)" [disabled]="creating">Create</ion-button>
-    </div>
+    <form class="create-container" (ngSubmit)="create()">
+      <input name="name" [(ngModel)]="name" [disabled]="creating">
+      <ion-button type="submit" [disabled]="creating">Create</ion-button>
+    </form>
 
     <app-retro-list></app-retro-list>
   </div>
