@@ -1,4 +1,4 @@
-<ion-card class="comment" *ngIf="comment">
+<ion-card mode="md" class="comment" *ngIf="comment">
   <ion-item>
     <!-- readonly mode -->
     <p *ngIf="readonly">{{ comment.text }}</p>
@@ -27,7 +27,7 @@
 
     <!-- discussion state -->
     <ng-container *ngIf="discussionState">
-      <ion-badge color="primary" slot="end">{{ comment.owner.name }}</ion-badge>
+      <ion-badge [color]="myComment ? 'primary' : 'medium'" slot="end">{{ comment.owner.name }}</ion-badge>
     </ng-container>
 
     <!-- voting state -->

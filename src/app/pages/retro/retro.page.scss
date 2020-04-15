@@ -5,8 +5,19 @@
 
   .comment-lists {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1500px;
     display: flex;
     justify-content: space-around;
+  }
+}
+
+@media (max-width: 800px) {
+  .retro-container .comment-lists {
+    flex-direction: column;
+
+    app-comment-list {
+      width: initial;
+      margin: initial;
+    }
   }
 }

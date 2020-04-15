@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {AuthService} from 'src/app/services/auth.service';
 import {CommentService} from 'src/app/services/comment.service';
 import {Comment, CommentCollection, Retro, RETRO_STATE} from 'types';
 
@@ -18,6 +19,7 @@ export class CommentCardComponent {
   voteCount = 0;
 
   constructor(
+      private readonly authService: AuthService,
       private readonly commentService: CommentService,
   ) {}
 
@@ -39,6 +41,10 @@ export class CommentCardComponent {
 
   get finishedState(): boolean {
     return this.retro.state === RETRO_STATE.FINISHED;
+  }
+
+  get myComment(): boolean {
+    return this.comment.owner.userId === this.authService.currentUserId;
   }
 
   startEditing() {
