@@ -14,7 +14,7 @@
 
     <section class="comment-lists">
       <app-comment-list title="Went Well" collection="thegood" [retro]="retro"></app-comment-list>
-      <app-comment-list title="Improvement Required" collection="thebad" [retro]="retro"></app-comment-list>
+      <app-comment-list title="Improvement Required" collection="thebad" allowVoting="true" [retro]="retro"></app-comment-list>
     </section>
     <ion-button (click)="markPlayerDone(retro)" *ngIf="playing">I'm done</ion-button>
 

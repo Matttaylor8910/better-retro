@@ -12,6 +12,7 @@ export class CommentCardComponent {
   @Input() retro: Retro;
   @Input() collection: CommentCollection;
   @Input() comment: Comment;
+  @Input() allowVoting: boolean;
 
   editing = false;
   editableText: string;

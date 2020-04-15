@@ -31,7 +31,7 @@
     </ng-container>
 
     <!-- voting state -->
-    <ng-container *ngIf="votingState">
+    <ng-container *ngIf="votingState && allowVoting">
       <ion-button fill="clear" slot="end" (click)="upvote()">
         <ion-icon slot="icon-only" name="arrow-up"></ion-icon>
       </ion-button>
@@ -42,7 +42,7 @@
     </ng-container>
 
     <!-- finished state -->
-    <ng-container *ngIf="finishedState">
+    <ng-container *ngIf="finishedState && allowVoting">
       <ion-badge color="primary" slot="end">{{ voteCount }}</ion-badge>
     </ng-container>
   </ion-item>
