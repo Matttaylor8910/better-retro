@@ -18,6 +18,7 @@ export class CommentService {
       comment: Partial<Comment>): Promise<DocumentReference> {
     comment.timestamp = firestore.FieldValue.serverTimestamp();
     comment.owner = await this.userService.getOwner();
+    comment.votes = 0;
     return this.afs.collection('retros')
         .doc(retroId)
         .collection(collection)

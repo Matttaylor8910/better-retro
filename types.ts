@@ -22,7 +22,7 @@ export interface Comment {
   text: string;
   owner: Player;
   timestamp: firebase.firestore.FieldValue;
-  votes?: number;
+  votes: number;
 }
 
 export interface Player {
