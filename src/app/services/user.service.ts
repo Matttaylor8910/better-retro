@@ -76,7 +76,6 @@ export class UserService {
     // subscribe to changes from the database
     this.userDoc.valueChanges().subscribe(user => {
       this.currentUser = {...this.currentUser, ...user};
-      console.log(this.currentUser);
     })
   }
 
