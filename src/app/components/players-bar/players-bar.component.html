@@ -1,3 +1,5 @@
-<p>
-  players-bar works!
-</p>
+<div class="players-bar-container">
+  <ion-chip [color]="player.done ? 'dark' : 'primary'" *ngFor="let player of players$ | async; let index = index">
+    {{ player.name }}
+  </ion-chip>
+</div>

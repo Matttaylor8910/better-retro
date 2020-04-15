@@ -24,8 +24,7 @@ export class RetroListComponent {
 
   async promptJoin(retro: Retrospective) {
     const alert = await this.alertController.create({
-      header: 'Join Retro',
-      message: `Join <b>${retro.name}</b> as a Spectator or Player?`,
+      header: 'Join as',
       buttons: [
         {
           text: 'Spectator',

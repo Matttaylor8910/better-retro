@@ -3,7 +3,7 @@ import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {firestore} from 'firebase';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {Player, RETRO_STATE, Retrospective} from 'types';
+import {Player, PlayerStatus, RETRO_STATE, Retrospective} from 'types';
 
 import {UserService} from './user.service';
 
@@ -59,11 +59,21 @@ export class RetroService {
         }));
   }
 
-  getRetroSpectivePlayers(id: string): Observable<Player[]> {
+  getRetrospectivePlayers(id: string): Observable<PlayerStatus[]> {
     return this.afs.collection('retrospectives')
         .doc(id)
-        .collection<Player>('players')
+        .collection<PlayerStatus>('players', ref => ref.orderBy('name'))
         .snapshotChanges()
         .pipe(map(actions => actions.map(action => action.payload.doc.data())));
+  }
+
+  async updateRetrospectivePlayer(
+      retroId: string, userId: string,
+      data: Partial<PlayerStatus>): Promise<void> {
+    return this.afs.collection('retrospectives')
+        .doc(retroId)
+        .collection('players')
+        .doc(userId)
+        .update(data);
   }
 }

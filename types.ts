@@ -24,10 +24,14 @@ export interface Comment {
   timestamp: firebase.firestore.FieldValue;
 }
 
-// /restrospectives/{retro}/players/{userId}
 export interface Player {
   userId: string;
   name: string;
+}
+
+// /restrospectives/{retro}/players/{userId}
+export interface PlayerStatus extends Player {
+  done: boolean;
 }
 
 // /restrospectives/{retro}/thegood/{comment}/votes/{userId}
