@@ -2,7 +2,7 @@
   <ion-card *ngFor="let retro of retros$ | async">
     <ion-item>
       <ion-label>{{ retro.name }}</ion-label>
-      <ion-button slot="end" (click)="join(retro)">Join</ion-button>
+      <ion-button slot="end" (click)="promptJoin(retro)">Join</ion-button>
     </ion-item>
     <ion-card-content>
       <app-retro-state [state]="retro.state"></app-retro-state>

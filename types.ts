@@ -6,16 +6,11 @@ export interface User {
   photoURL?: string;
 }
 
-export interface Owner {
-  userId: string;
-  name: string;
-}
-
 // /retrospectives/{retro}
 export interface Retrospective {
   id: string;
   name: string;
-  owner: Owner;
+  owner: Player;
   state: RETRO_STATE;
   timestamp: firebase.firestore.FieldValue;
 }
@@ -25,16 +20,18 @@ export interface Retrospective {
 export interface Comment {
   id: string;
   text: string;
-  owner: Owner;
+  owner: Player;
   timestamp: firebase.firestore.FieldValue;
 }
-export enum CommentCollection {
-  THE_GOOD = 'thegood',
-  THE_BAD = 'thebad',
+
+// /restrospectives/{retro}/players/{userId}
+export interface Player {
+  userId: string;
+  name: string;
 }
 
-// /restrospectives/{retro}/thegood/{comment}/votes/{vote}
-// /restrospectives/{retro}/thebad/{comment}/votes/{vote}
+// /restrospectives/{retro}/thegood/{comment}/votes/{userId}
+// /restrospectives/{retro}/thebad/{comment}/votes/{userId}
 export interface Vote {
   // If you call votesRef.doc(userId).set({count:
   // firestore.FieldValue.increment(1) }) then count will be created or
@@ -42,6 +39,11 @@ export interface Vote {
   // than one time
   count: number;
   timestamp: firebase.firestore.FieldValue;
+}
+
+export enum CommentCollection {
+  THE_GOOD = 'thegood',
+  THE_BAD = 'thebad',
 }
 
 export enum RETRO_STATE {

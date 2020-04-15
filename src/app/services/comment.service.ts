@@ -47,7 +47,7 @@ export class CommentService {
   getComments(retroId: string): Observable<Comment[]> {
     return this.afs.collection('retrospectives')
         .doc(retroId)
-        .collection('thegood', ref => ref.orderBy('timestamp', 'desc'))
+        .collection('thegood', ref => ref.orderBy('timestamp'))
         .snapshotChanges()
         .pipe(map(actions => {return actions.map(action => {
                     const data = action.payload.doc.data() as Comment;

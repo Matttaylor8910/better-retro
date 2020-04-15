@@ -3,7 +3,8 @@ import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {firestore} from 'firebase';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {RETRO_STATE, Retrospective} from 'types';
+import {Player, RETRO_STATE, Retrospective} from 'types';
+
 import {UserService} from './user.service';
 
 @Injectable({providedIn: 'root'})
@@ -20,12 +21,21 @@ export class RetroService {
     return this.afs.collection('retrospectives').add(retro);
   }
 
-  getRetrospective(id: string): Observable<Retrospective> {
+  async joinRetro(id: string): Promise<void> {
+    const owner = await this.userService.getOwner();
     return this.afs.collection('retrospectives')
         .doc(id)
+        .collection('players')
+        .doc(owner.userId)
+        .set(owner);
+  }
+
+  getRetrospective(id: string): Observable<Retrospective> {
+    return this.afs.collection('retrospectives')
+        .doc<Retrospective>(id)
         .snapshotChanges()
         .pipe(map(action => {
-          const data = action.payload.data() as Retrospective;
+          const data = action.payload.data();
           const id = action.payload.id;
           return {id, ...data};
         }));
@@ -33,14 +43,23 @@ export class RetroService {
 
   getRetrospectives(): Observable<Retrospective[]> {
     return this.afs
-        .collection('retrospectives', ref => ref.orderBy('timestamp', 'desc'))
+        .collection<Retrospective>(
+            'retrospectives', ref => ref.orderBy('timestamp', 'desc'))
         .snapshotChanges()
         .pipe(map(actions => {
           return actions.map(action => {
-            const data = action.payload.doc.data() as Retrospective;
+            const data = action.payload.doc.data();
             const id = action.payload.doc.id;
             return {id, ...data};
           });
         }));
+  }
+
+  getRetroSpectivePlayers(id: string): Observable<Player[]> {
+    return this.afs.collection('retrospectives')
+        .doc(id)
+        .collection<Player>('players')
+        .snapshotChanges()
+        .pipe(map(actions => actions.map(action => action.payload.doc.data())));
   }
 }
