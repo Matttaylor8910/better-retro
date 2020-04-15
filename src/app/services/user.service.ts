@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {AlertController} from '@ionic/angular';
-import {User} from 'types';
+import {Owner, User} from 'types';
 
 import {AuthService} from './auth.service';
 
@@ -59,6 +59,13 @@ export class UserService {
         await alert.present();
       }
     });
+  }
+
+  async getOwner(): Promise<Owner> {
+    return {
+      name: await this.getCurrentUserName(),
+      userId: await this.getCurrentUserId(),
+    };
   }
 
   private async subscribeToUser() {

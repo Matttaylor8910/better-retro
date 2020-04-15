@@ -16,10 +16,7 @@ export class RetroService {
   async createRetro(retro: Partial<Retrospective>): Promise<DocumentReference> {
     retro.timestamp = firestore.FieldValue.serverTimestamp();
     retro.state = RETRO_STATE.NOTES;
-    retro.owner = {
-      userId: await this.userService.getCurrentUserId(),
-      name: await this.userService.getCurrentUserName()
-    };
+    retro.owner = await this.userService.getOwner();
     return this.afs.collection('retrospectives').add(retro);
   }
 

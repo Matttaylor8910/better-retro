@@ -23,9 +23,14 @@ export interface Retrospective {
 // /restrospectives/{retro}/thegood/{comment}
 // /restrospectives/{retro}/thebad/{comment}
 export interface Comment {
+  id: string;
   text: string;
   owner: Owner;
   timestamp: firebase.firestore.FieldValue;
+}
+export enum CommentCollection {
+  THE_GOOD = 'thegood',
+  THE_BAD = 'thebad',
 }
 
 // /restrospectives/{retro}/thegood/{comment}/votes/{vote}
