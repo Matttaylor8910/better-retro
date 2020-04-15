@@ -1,3 +1,16 @@
-<p>
-  state-progress-bar works!
-</p>
+<div class="state-progress-bar-container">
+  <div class="state"
+    [class.selected]="currentState === state"
+    *ngFor="let state of states; let first = first; let last = last;"
+  >
+    <div class="label">{{ state }}</div>
+    <div class="buttons" [class.hidden]="currentState !== state" *ngIf="owner">
+      <ion-button size="small" color="light" [hidden]="first" (click)="prev()">
+        Prev
+      </ion-button>
+      <ion-button size="small" [hidden]="last" (click)="next()">
+        Next
+      </ion-button>
+    </div>
+  </div>
+</div>

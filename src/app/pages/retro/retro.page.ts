@@ -19,7 +19,6 @@ export class RetroPage {
       private readonly retroService: RetroService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log('got id', this.id);
     this.retro$ = this.retroService.getRetrospective(this.id);
   }
 }

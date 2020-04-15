@@ -8,7 +8,9 @@
 
 <ion-content>
   <div class="retro-container" *ngIf="retro$ | async as retro; else loading">
-    <h1>Time to write the real code now</h1>
+
+    <app-state-progress-bar [retro]="retro"></app-state-progress-bar>
+
   </div>
 </ion-content>
 

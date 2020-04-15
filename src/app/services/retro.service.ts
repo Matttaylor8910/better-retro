@@ -21,6 +21,10 @@ export class RetroService {
     return this.afs.collection('retrospectives').add(retro);
   }
 
+  async updateRetro(id: string, data: Partial<Retrospective>): Promise<void> {
+    return this.afs.collection('retrospectives').doc(id).update(data);
+  }
+
   async joinRetro(id: string): Promise<void> {
     const owner = await this.userService.getOwner();
     return this.afs.collection('retrospectives')
