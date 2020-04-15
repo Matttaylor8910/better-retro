@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {RetroService} from 'src/app/services/retro.service';
-import {Player, Retrospective} from 'types';
+import {Player, Retro} from 'types';
 
 @Component({
   selector: 'app-players-bar',
@@ -9,7 +9,7 @@ import {Player, Retrospective} from 'types';
   styleUrls: ['./players-bar.component.scss'],
 })
 export class PlayersBarComponent implements OnInit {
-  @Input() retro: Retrospective;
+  @Input() retro: Retro;
 
   players$: Observable<Player[]>
 

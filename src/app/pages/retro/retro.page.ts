@@ -4,7 +4,7 @@ import {firestore} from 'firebase';
 import {Observable} from 'rxjs';
 import {RetroService} from 'src/app/services/retro.service';
 import {UserService} from 'src/app/services/user.service';
-import {Retrospective} from 'types';
+import {Retro} from 'types';
 
 @Component({
   selector: 'app-retro',
@@ -15,7 +15,7 @@ export class RetroPage {
   id: string;
   title = 'Loading...';
   playing = false;
-  retro$: Observable<Retrospective>
+  retro$: Observable<Retro>
 
   constructor(
       private readonly route: ActivatedRoute,
@@ -40,7 +40,7 @@ export class RetroPage {
     this.playing = playerIds.includes(userId);
   }
 
-  async markPlayerDone(retro: Retrospective) {
+  async markPlayerDone(retro: Retro) {
     const userId = await this.userService.getCurrentUserId();
     this.retroService.updateRetrospectivePlayer(retro.id, userId, {done: true});
   }

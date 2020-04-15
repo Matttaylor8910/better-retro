@@ -4,7 +4,7 @@ import {AlertController} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {RetroService} from 'src/app/services/retro.service';
 import {UserService} from 'src/app/services/user.service';
-import {Retrospective} from 'types';
+import {Retro} from 'types';
 
 @Component({
   selector: 'app-retro-list',
@@ -12,7 +12,7 @@ import {Retrospective} from 'types';
   styleUrls: ['./retro-list.component.scss'],
 })
 export class RetroListComponent {
-  retros$: Observable<Retrospective[]>;
+  retros$: Observable<Retro[]>;
 
   constructor(
       private readonly retroService: RetroService,
@@ -22,7 +22,7 @@ export class RetroListComponent {
     this.retros$ = this.retroService.getRetrospectives();
   }
 
-  async promptJoin(retro: Retrospective) {
+  async promptJoin(retro: Retro) {
     const alert = await this.alertController.create({
       header: 'Join as',
       buttons: [
@@ -45,12 +45,12 @@ export class RetroListComponent {
     await alert.present();
   }
 
-  async join(retro: Retrospective) {
+  async join(retro: Retro) {
     await this.retroService.joinRetro(retro.id);
     this.navToRetro(retro);
   }
 
-  navToRetro(retro: Retrospective) {
+  navToRetro(retro: Retro) {
     this.router.navigate(['retro', retro.id]);
   }
 }

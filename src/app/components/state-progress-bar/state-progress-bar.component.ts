@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {AuthService} from 'src/app/services/auth.service';
 import {RetroService} from 'src/app/services/retro.service';
-import {RETRO_STATE, Retrospective} from 'types';
+import {Retro, RETRO_STATE} from 'types';
 
 @Component({
   selector: 'app-state-progress-bar',
@@ -9,7 +9,7 @@ import {RETRO_STATE, Retrospective} from 'types';
   styleUrls: ['./state-progress-bar.component.scss'],
 })
 export class StateProgressBarComponent {
-  @Input() retro: Retrospective;
+  @Input() retro: Retro;
 
   states: RETRO_STATE[];
 

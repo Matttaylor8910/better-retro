@@ -4,7 +4,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {CommentService} from 'src/app/services/comment.service';
 import {UserService} from 'src/app/services/user.service';
-import {Comment, CommentCollection, RETRO_STATE, Retrospective} from 'types';
+import {Comment, CommentCollection, Retro, RETRO_STATE} from 'types';
 
 @Component({
   selector: 'app-comment-list',
@@ -14,7 +14,7 @@ import {Comment, CommentCollection, RETRO_STATE, Retrospective} from 'types';
 export class CommentListComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @Input() collection: CommentCollection;
-  @Input() retro: Retrospective;
+  @Input() retro: Retro;
 
   private destroyed$ = new Subject<void>();
   private myComments: Comment[] = [];

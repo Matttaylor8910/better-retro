@@ -3,7 +3,7 @@ import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {firestore} from 'firebase';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {Player, PlayerStatus, RETRO_STATE, Retrospective} from 'types';
+import {Player, PlayerStatus, Retro, RETRO_STATE} from 'types';
 
 import {UserService} from './user.service';
 
@@ -14,7 +14,7 @@ export class RetroService {
       private readonly userService: UserService,
   ) {}
 
-  async createRetro(retro: Partial<Retrospective>): Promise<DocumentReference> {
+  async createRetro(retro: Partial<Retro>): Promise<DocumentReference> {
     retro.timestamp = firestore.FieldValue.serverTimestamp();
     retro.state = RETRO_STATE.NOTES;
     retro.owner = await this.userService.getOwner();
@@ -26,7 +26,7 @@ export class RetroService {
     return ref;
   }
 
-  async updateRetro(id: string, data: Partial<Retrospective>): Promise<void> {
+  async updateRetro(id: string, data: Partial<Retro>): Promise<void> {
     return this.afs.collection('retros').doc(id).update(data);
   }
 
@@ -39,21 +39,18 @@ export class RetroService {
         .set(owner);
   }
 
-  getRetrospective(id: string): Observable<Retrospective> {
-    return this.afs.collection('retros')
-        .doc<Retrospective>(id)
-        .snapshotChanges()
-        .pipe(map(action => {
+  getRetrospective(id: string): Observable<Retro> {
+    return this.afs.collection('retros').doc<Retro>(id).snapshotChanges().pipe(
+        map(action => {
           const data = action.payload.data();
           const id = action.payload.id;
           return {id, ...data};
         }));
   }
 
-  getRetrospectives(): Observable<Retrospective[]> {
+  getRetrospectives(): Observable<Retro[]> {
     return this.afs
-        .collection<Retrospective>(
-            'retros', ref => ref.orderBy('timestamp', 'desc'))
+        .collection<Retro>('retros', ref => ref.orderBy('timestamp', 'desc'))
         .snapshotChanges()
         .pipe(map(actions => {
           return actions.map(action => {

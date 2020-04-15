@@ -7,7 +7,8 @@ export interface User {
 }
 
 // /retrospectives/{retro}
-export interface Retrospective {
+export interface orderBy
+(comments, 'owner.name') {
   id: string;
   name: string;
   owner: Player;
