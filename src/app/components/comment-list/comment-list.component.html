@@ -20,11 +20,14 @@
     *ngFor="let comment of comments">
   </app-comment-card>
 
-  <!-- not playing waiting state -->
-  <h6 *ngIf="notesState && !playing">Waiting for players to finish up...</h6>
+  <!-- loading state -->
+  <h6 *ngIf="loading; else emptyStates">Loading...</h6>
 
-  <!-- no comments -->
-  <h6 *ngIf="!notesState && comments.length === 0">
-    {{ loading ? 'Loading...' : 'No comments? 🤔' }}
-  </h6>
+  <ng-template #emptyStates>
+    <!-- not playing, waiting for comments -->
+    <h6 *ngIf="notesState && !playing">Waiting for players to finish up...</h6>
+
+    <!-- no comments after notes state -->
+    <h6 *ngIf="!notesState && comments.length === 0">No comments? 🤔</h6>
+  </ng-template>
 </div>
