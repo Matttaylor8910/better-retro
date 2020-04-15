@@ -4,6 +4,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
+import {ServiceWorkerModule} from '@angular/service-worker';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
@@ -24,6 +25,8 @@ import {AppComponent} from './app.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ServiceWorkerModule.register(
+        'ngsw-worker.js', {enabled: environment.production}),
   ],
   providers: [
     AngularFirestore,
