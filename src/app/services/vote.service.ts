@@ -3,13 +3,10 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {firestore} from 'firebase';
 import {CommentCollection} from 'types';
 
-import {UserService} from './user.service';
-
 @Injectable({providedIn: 'root'})
 export class VoteService {
   constructor(
       private readonly afs: AngularFirestore,
-      private readonly userService: UserService,
   ) {}
 
   upvote(
@@ -31,6 +28,6 @@ export class VoteService {
         .doc(retroId)
         .collection(commentCollection)
         .doc(commentId)
-        .update({votes: firestore.FieldValue.increment(increment)})
+        .update({votes: firestore.FieldValue.increment(increment)});
   }
 }
