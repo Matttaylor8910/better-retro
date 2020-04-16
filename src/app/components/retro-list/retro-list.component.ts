@@ -4,7 +4,7 @@ import {AlertController} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {RetroService} from 'src/app/services/retro.service';
 import {UserService} from 'src/app/services/user.service';
-import {Retro} from 'types';
+import {Retro, RETRO_STATE} from 'types';
 
 @Component({
   selector: 'app-retro-list',
@@ -23,26 +23,30 @@ export class RetroListComponent {
   }
 
   async promptJoin(retro: Retro) {
-    const alert = await this.alertController.create({
-      header: 'Join as',
-      buttons: [
-        {
-          text: 'Spectator',
-          cssClass: 'secondary',
-          handler: () => {
-            this.navToRetro(retro);
+    if (retro.state === RETRO_STATE.FINISHED) {
+      this.navToRetro(retro);
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Join as',
+        buttons: [
+          {
+            text: 'Spectator',
+            cssClass: 'secondary',
+            handler: () => {
+              this.navToRetro(retro);
+            }
+          },
+          {
+            text: 'Player',
+            handler: () => {
+              this.join(retro);
+            }
           }
-        },
-        {
-          text: 'Player',
-          handler: () => {
-            this.join(retro);
-          }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+    }
   }
 
   async join(retro: Retro) {
