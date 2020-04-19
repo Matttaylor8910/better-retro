@@ -12,11 +12,17 @@ export interface Retro {
   name: string;
   owner: Player;
   state: RETRO_STATE;
+  commentLists: CommentList[];
+  maxVotes: number;
   timestamp: firebase.firestore.FieldValue;
 }
 
-// /restrospectives/{retro}/thegood/{comment}
-// /restrospectives/{retro}/thebad/{comment}
+export interface CommentList {
+  header: string;
+  allowVoting: boolean;
+}
+
+// /restrospectives/{retro}/comments-{index}/{comment}
 export interface Comment {
   id: string;
   text: string;
@@ -33,11 +39,6 @@ export interface Player {
 // /restrospectives/{retro}/players/{userId}
 export interface PlayerStatus extends Player {
   done: boolean;
-}
-
-export enum CommentCollection {
-  THE_GOOD = 'thegood',
-  THE_BAD = 'thebad',
 }
 
 export enum RETRO_STATE {

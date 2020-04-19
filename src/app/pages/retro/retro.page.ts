@@ -26,6 +26,11 @@ export class RetroPage {
     this.determinePlaying();
   }
 
+  shouldWrap(retro: Retro): boolean {
+    const MIN_LIST_WIDTH = 400;
+    return window.innerWidth / retro.commentLists.length < MIN_LIST_WIDTH;
+  }
+
   async determinePlaying() {
     const snapshot = await firestore()
                          .collection('retros')

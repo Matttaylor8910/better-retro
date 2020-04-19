@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {firestore} from 'firebase';
-import {CommentCollection} from 'types';
 
 @Injectable({providedIn: 'root'})
 export class VoteService {
@@ -9,24 +8,22 @@ export class VoteService {
       private readonly afs: AngularFirestore,
   ) {}
 
-  upvote(
-      retroId: string, commentCollection: CommentCollection,
-      commentId: string): Promise<void> {
-    return this.vote(retroId, commentCollection, commentId, 1);
+  upvote(retroId: string, commentsIndex: number, commentId: string):
+      Promise<void> {
+    return this.vote(retroId, commentsIndex, commentId, 1);
   }
 
-  downvote(
-      retroId: string, commentCollection: CommentCollection,
-      commentId: string): Promise<void> {
-    return this.vote(retroId, commentCollection, commentId, -1);
+  downvote(retroId: string, commentsIndex: number, commentId: string):
+      Promise<void> {
+    return this.vote(retroId, commentsIndex, commentId, -1);
   }
 
   private async vote(
-      retroId: string, commentCollection: CommentCollection, commentId: string,
+      retroId: string, commentsIndex: number, commentId: string,
       increment: number): Promise<void> {
     return this.afs.collection('retros')
         .doc(retroId)
-        .collection(commentCollection)
+        .collection(`comments-${commentsIndex}`)
         .doc(commentId)
         .update({votes: firestore.FieldValue.increment(increment)});
   }

@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {AuthService} from 'src/app/services/auth.service';
 import {CommentService} from 'src/app/services/comment.service';
 import {VoteService} from 'src/app/services/vote.service';
-import {Comment, CommentCollection, Retro, RETRO_STATE} from 'types';
+import {Comment, Retro, RETRO_STATE} from 'types';
 
 @Component({
   selector: 'app-comment-card',
@@ -11,7 +11,7 @@ import {Comment, CommentCollection, Retro, RETRO_STATE} from 'types';
 })
 export class CommentCardComponent {
   @Input() retro: Retro;
-  @Input() collection: CommentCollection;
+  @Input() commentsIndex: number;
   @Input() comment: Comment;
   @Input() allowVoting: boolean;
   @Input() playing: boolean;
@@ -61,7 +61,7 @@ export class CommentCardComponent {
   saveEdit() {
     this.comment.text = this.editableText;
     this.commentService.updateComment(
-        this.retro.id, this.collection, this.comment);
+        this.retro.id, this.commentsIndex, this.comment);
     this.editing = false;
   }
 
@@ -71,14 +71,15 @@ export class CommentCardComponent {
 
   deleteComment() {
     this.commentService.deleteComment(
-        this.retro.id, this.collection, this.comment.id);
+        this.retro.id, this.commentsIndex, this.comment.id);
   }
 
   upvote() {
-    this.voteService.upvote(this.retro.id, this.collection, this.comment.id);
+    this.voteService.upvote(this.retro.id, this.commentsIndex, this.comment.id);
   }
 
   downvote() {
-    this.voteService.downvote(this.retro.id, this.collection, this.comment.id);
+    this.voteService.downvote(
+        this.retro.id, this.commentsIndex, this.comment.id);
   }
 }

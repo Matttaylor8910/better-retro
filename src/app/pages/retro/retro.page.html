@@ -12,18 +12,12 @@
     <app-state-progress-bar [retro]="retro"></app-state-progress-bar>
     <app-players-bar [retro]="retro"></app-players-bar>
 
-    <section class="comment-lists">
+    <section class="comment-lists" [class.wrap]="shouldWrap(retro)">
       <app-comment-list
-        header="Went Well"
-        collection="thegood"
-        [allowVoting]="false"
-        [retro]="retro"
-        [playing]="playing">
-      </app-comment-list>
-      <app-comment-list
-        header="Improvement Required"
-        collection="thebad"
-        [allowVoting]="true"
+        *ngFor="let list of retro.commentLists; let index = index"
+        [commentsIndex]="index"
+        [header]="list.header"
+        [allowVoting]="list.allowVoting"
         [retro]="retro"
         [playing]="playing">
       </app-comment-list>

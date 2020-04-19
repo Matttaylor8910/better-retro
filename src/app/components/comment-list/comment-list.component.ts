@@ -4,7 +4,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {CommentService} from 'src/app/services/comment.service';
 import {UserService} from 'src/app/services/user.service';
-import {Comment, CommentCollection, Retro, RETRO_STATE} from 'types';
+import {Comment, Retro, RETRO_STATE} from 'types';
 
 @Component({
   selector: 'app-comment-list',
@@ -13,7 +13,7 @@ import {Comment, CommentCollection, Retro, RETRO_STATE} from 'types';
 })
 export class CommentListComponent implements OnInit, OnDestroy {
   @Input() header: string;
-  @Input() collection: CommentCollection;
+  @Input() commentsIndex: number;
   @Input() retro: Retro;
   @Input() allowVoting: boolean;
   @Input() playing: boolean;
@@ -49,13 +49,13 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
   create(text: string) {
     this.creating = true;
-    this.commentService.addComment(this.retro.id, this.collection, {text});
+    this.commentService.addComment(this.retro.id, this.commentsIndex, {text});
     this.text = '';
     this.creating = false;
   }
 
   ngOnInit() {
-    this.commentService.getComments(this.retro.id, this.collection)
+    this.commentService.getComments(this.retro.id, this.commentsIndex)
         .pipe(takeUntil(this.destroyed$))
         .subscribe(async comments => {
           this.sortedByName = orderBy(comments, 'owner.name');

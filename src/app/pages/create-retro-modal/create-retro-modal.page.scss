@@ -1,0 +1,30 @@
+ion-list {
+  ion-list-header {
+    padding: 0 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  .remove-list {
+    cursor: pointer;
+  }
+
+  ion-input[type="tel"] {
+    max-width: 30px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-list ion-list-header {
+    border-bottom-color: #777;
+    color: #777;
+  }
+}

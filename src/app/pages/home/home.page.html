@@ -1,10 +1,9 @@
 <ion-content [fullscreen]="true">
   <div class="container">
-    <h1>Better Retro</h1>
-    <form class="create-container" (ngSubmit)="create()">
-      <input name="name" [(ngModel)]="name" [disabled]="creating">
-      <ion-button type="submit" [disabled]="creating">Create</ion-button>
-    </form>
+    <h1 class="title">
+      Better Retro
+      <ion-button (click)="openCreateModal()">Create</ion-button>
+    </h1>
 
     <app-retro-list></app-retro-list>
   </div>

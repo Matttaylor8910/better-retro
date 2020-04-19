@@ -5,21 +5,11 @@
   align-items: center;
   flex-direction: column;
 
-  .create-container {
+  .title {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    margin: 8px;
+    width: 350px;
     max-width: 90vw;
-
-    input {
-      margin-right: 5px;
-      padding: 5px 10px;
-      width: 250px;
-      height: 40px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background-color: var(--ion-color-step-50);
-    }
   }
 }

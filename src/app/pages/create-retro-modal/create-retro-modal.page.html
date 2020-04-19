@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>New Retrospective</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="primary" (click)="createRetro()" [disabled]="disabled">
+        Create Retro
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Retro Name
+    </ion-list-header>
+    <ion-item>
+      <ion-input [(ngModel)]="retro.name" placeholder="Cool retro"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Max Votes</ion-label>
+      <ion-input type="tel" [(ngModel)]="retro.maxVotes" slot="end"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <div class="header-container">
+        <div>List Header</div>
+        <div>Allow Voting</div>
+      </div>
+    </ion-list-header>
+    <ion-item *ngFor="let list of retro?.commentLists; let i = index">
+      <ion-input [(ngModel)]="list.header" placeholder="Improvement Required"></ion-input>
+      <ion-toggle [(ngModel)]="list.allowVoting"></ion-toggle>
+      <ion-icon class="remove-list" color="danger" name="remove-circle" slot="end" (click)="removeList(i)" *ngIf="retro?.commentLists.length > 1"></ion-icon>
+    </ion-item>
+    <ion-button fill="clear" (click)="addList()">
+      <ion-icon name="add"></ion-icon> Add List
+    </ion-button>
+  </ion-list>
+</ion-content>
