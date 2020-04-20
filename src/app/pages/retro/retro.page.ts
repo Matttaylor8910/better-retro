@@ -22,7 +22,7 @@ export class RetroPage {
       private readonly userService: UserService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.retro$ = this.retroService.getRetrospective(this.id);
+    this.retro$ = this.retroService.getRetro(this.id);
     this.determinePlaying();
   }
 

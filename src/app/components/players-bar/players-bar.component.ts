@@ -18,6 +18,6 @@ export class PlayersBarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.players$ = this.retroService.getRetrospectivePlayers(this.retro.id);
+    this.players$ = this.retroService.getRetroPlayers(this.retro.id);
   }
 }

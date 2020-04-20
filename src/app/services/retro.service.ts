@@ -3,12 +3,14 @@ import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {firestore} from 'firebase';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {Player, PlayerStatus, Retro, RETRO_STATE} from 'types';
+import {PlayerStatus, Retro, RETRO_STATE} from 'types';
 
 import {UserService} from './user.service';
 
 @Injectable({providedIn: 'root'})
 export class RetroService {
+  db = firestore();
+
   constructor(
       private readonly afs: AngularFirestore,
       private readonly userService: UserService,
@@ -39,7 +41,7 @@ export class RetroService {
         .set(owner);
   }
 
-  getRetrospective(id: string): Observable<Retro> {
+  getRetro(id: string): Observable<Retro> {
     return this.afs.collection('retros').doc<Retro>(id).snapshotChanges().pipe(
         map(action => {
           const data = action.payload.data();
@@ -48,7 +50,7 @@ export class RetroService {
         }));
   }
 
-  getRetrospectives(): Observable<Retro[]> {
+  getRetros(): Observable<Retro[]> {
     return this.afs
         .collection<Retro>('retros', ref => ref.orderBy('timestamp', 'desc'))
         .snapshotChanges()
@@ -61,7 +63,7 @@ export class RetroService {
         }));
   }
 
-  getRetrospectivePlayers(id: string): Observable<PlayerStatus[]> {
+  getRetroPlayers(id: string): Observable<PlayerStatus[]> {
     return this.afs.collection('retros')
         .doc(id)
         .collection<PlayerStatus>('players', ref => ref.orderBy('name'))
@@ -69,7 +71,19 @@ export class RetroService {
         .pipe(map(actions => actions.map(action => action.payload.doc.data())));
   }
 
-  async updateRetrospectivePlayer(
+  async playerIsInRetro(retroId: string): Promise<boolean> {
+    const userId = await this.userService.getCurrentUserId();
+    const snapshot = await this.db.collection('retros')
+                         .doc(retroId)
+                         .collection('players')
+                         .doc(userId)
+                         .get();
+
+    // if a document exists at this path, the user is already in the game
+    return snapshot.exists;
+  }
+
+  async updateRetroPlayer(
       retroId: string, userId: string,
       data: Partial<PlayerStatus>): Promise<void> {
     return this.afs.collection('retros')

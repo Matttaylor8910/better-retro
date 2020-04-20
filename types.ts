@@ -6,7 +6,7 @@ export interface User {
   photoURL?: string;
 }
 
-// /retrospectives/{retro}
+// /retros/{retro}
 export interface Retro {
   id: string;
   name: string;

@@ -19,11 +19,12 @@ export class RetroListComponent {
       private readonly router: Router,
       private readonly alertController: AlertController,
   ) {
-    this.retros$ = this.retroService.getRetrospectives();
+    this.retros$ = this.retroService.getRetros();
   }
 
   async promptJoin(retro: Retro) {
-    if (retro.state === RETRO_STATE.FINISHED) {
+    if (retro.state === RETRO_STATE.FINISHED ||
+        await this.retroService.playerIsInRetro(retro.id)) {
       this.navToRetro(retro);
     } else {
       const alert = await this.alertController.create({
