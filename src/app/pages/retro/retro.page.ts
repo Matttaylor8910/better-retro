@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {firestore} from 'firebase';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 import {RetroService} from 'src/app/services/retro.service';
 import {UserService} from 'src/app/services/user.service';
 import {Retro} from 'types';
@@ -12,6 +12,8 @@ import {Retro} from 'types';
   styleUrls: ['./retro.page.scss'],
 })
 export class RetroPage {
+  private destroyed$ = new Subject<void>();
+
   id: string;
   playing = false;
   retro$: Observable<Retro>
@@ -32,15 +34,20 @@ export class RetroPage {
   }
 
   async determinePlaying() {
-    const snapshot = await firestore()
-                         .collection('retros')
-                         .doc(this.id)
-                         .collection('players')
-                         .get();
-
-    const playerIds = snapshot.docs.map(doc => doc.data().userId);
     const userId = await this.userService.getCurrentUserId();
 
-    this.playing = playerIds.includes(userId);
+    this.retroService.getRetroPlayers(this.id)
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(players => {
+          this.playing = !!players.find(p => p.userId === userId);
+        });
+  }
+
+  joinRetro() {
+    this.retroService.joinRetro(this.id);
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
   }
 }
