@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {RetroService} from 'src/app/services/retro.service';
-import {Player, Retro} from 'types';
+import {Player, Retro, RETRO_STATE} from 'types';
 
 @Component({
   selector: 'app-players-bar',
@@ -16,6 +16,10 @@ export class PlayersBarComponent implements OnInit {
   constructor(
       private readonly retroService: RetroService,
   ) {}
+
+  get notesState(): boolean {
+    return this.retro.state === RETRO_STATE.NOTES;
+  }
 
   ngOnInit() {
     this.players$ = this.retroService.getRetroPlayers(this.retro.id);

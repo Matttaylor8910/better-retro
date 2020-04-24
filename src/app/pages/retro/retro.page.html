@@ -24,9 +24,14 @@
         [header]="list.header"
         [allowVoting]="list.allowVoting"
         [retro]="retro"
-        [playing]="playing">
+        [playing]="playing"
+        [ready]="me?.ready">
       </app-comment-list>
     </section>
+
+    <ion-button (click)="toggleReady()" *ngIf="playing && retro.state === 'Notes'">
+      {{ me?.ready ? 'Write more' : 'I\'m done' }}
+    </ion-button>
 
   </div>
 </ion-content>

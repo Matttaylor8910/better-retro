@@ -17,6 +17,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
   @Input() retro: Retro;
   @Input() allowVoting: boolean;
   @Input() playing: boolean;
+  @Input() ready: boolean = false;
 
   private destroyed$ = new Subject<void>();
   private myComments: Comment[] = [];

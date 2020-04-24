@@ -3,7 +3,7 @@
   <h1>{{ header }}</h1>
 
   <!-- add a new comment -->
-  <form class="new-comment" *ngIf="notesState && playing" (ngSubmit)="create(text)">
+  <form class="new-comment" *ngIf="notesState && playing && !ready" (ngSubmit)="create(text)">
     <input name="comment" [(ngModel)]="text" [disabled]="creating">
     <ion-button type="submit" [disabled]="creating">
       <ion-icon name="add"></ion-icon>
@@ -17,6 +17,7 @@
     [comment]="comment"
     [allowVoting]="allowVoting"
     [playing]="playing"
+    [ready]="ready"
     *ngFor="let comment of comments">
   </app-comment-card>
 

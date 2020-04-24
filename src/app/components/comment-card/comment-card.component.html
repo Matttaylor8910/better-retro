@@ -3,8 +3,8 @@
     <!-- readonly mode -->
     <p *ngIf="readonly">{{ comment.text }}</p>
 
-    <!-- notes state -->
-    <ng-container *ngIf="notesState">
+    <!-- notes state controls -->
+    <ng-container *ngIf="notesState && !ready">
       <!-- editable comment -->
       <ion-textarea [(ngModel)]="editableText" autoGrow="true" *ngIf="editing"></ion-textarea>
 

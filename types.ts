@@ -34,6 +34,7 @@ export interface Comment {
 export interface Player {
   userId: string;
   name: string;
+  ready?: boolean;
 }
 
 // /restrospectives/{retro}/players/{userId}

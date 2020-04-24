@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {AlertController} from '@ionic/angular';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Player, User} from 'types';
 
 import {AuthService} from './auth.service';

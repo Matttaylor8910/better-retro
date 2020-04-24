@@ -1,5 +1,9 @@
 <div class="players-bar-container">
-  <ion-badge [color]="player.done ? 'dark' : 'primary'" *ngFor="let player of players$ | async; let index = index">
+  <ion-badge
+    [color]="notesState && player.ready ? 'success' : 'primary'"
+    *ngFor="let player of players$ | async; let index = index"
+  >
     {{ player.name }}
+    <ion-icon name="checkbox" *ngIf="notesState && player.ready"></ion-icon>
   </ion-badge>
 </div>

@@ -15,6 +15,7 @@ export class CommentCardComponent {
   @Input() comment: Comment;
   @Input() allowVoting: boolean;
   @Input() playing: boolean;
+  @Input() ready: boolean;
 
   editing = false;
   editableText: string;
