@@ -1,10 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Better Retro
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="openCreateModal()">
+        Create Retro
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
   <div class="container">
-    <h1 class="title">
-      Better Retro
-      <ion-button (click)="openCreateModal()">Create</ion-button>
-    </h1>
-
     <app-retro-list></app-retro-list>
   </div>
 </ion-content>

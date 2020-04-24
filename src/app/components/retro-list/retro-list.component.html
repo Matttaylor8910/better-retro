@@ -1,5 +1,5 @@
-<div class="retro-list-container">
-  <ion-card *ngFor="let retro of retros$ | async">
+<div class="retro-list-container" *ngIf="retros$ | async as retros; else loading">
+  <ion-card *ngFor="let retro of retros">
     <ion-item>
       <ion-label>{{ retro.name }}</ion-label>
       <ion-button slot="end" (click)="promptJoin(retro)">Join</ion-button>
@@ -9,3 +9,9 @@
     </ion-card-content>
   </ion-card>
 </div>
+
+<ng-template #loading>
+  <div class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+</ng-template>
